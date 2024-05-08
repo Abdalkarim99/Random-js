@@ -1,4 +1,6 @@
+import MainLayout from "@/components/MainLayout";
 import "./globals.css";
+import MenuIconProvider from "@/context/MenuIcon";
 
 export const metadata = {
   title: "Create Next App(Random-js)",
@@ -8,7 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <MenuIconProvider>
+          <MainLayout>{children}</MainLayout>
+        </MenuIconProvider>
+      </body>
     </html>
   );
 }
