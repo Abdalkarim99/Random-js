@@ -1,18 +1,28 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import MainHeader from "./MainHeader";
 import Link from "next/link";
 
 import { AiOutlineHome } from "react-icons/ai";
 import { GrProjects } from "react-icons/gr";
-import { FaAngleRight, FaCheck, FaCheckDouble } from "react-icons/fa";
+import {
+  FaAngleRight,
+  FaAngleDown,
+  FaCheck,
+  FaCheckDouble,
+} from "react-icons/fa";
 import { SiHelpscout } from "react-icons/si";
 import { FiPhoneCall } from "react-icons/fi";
 import { MenuIcon } from "@/context/MenuIcon";
 
 const MainLayout = ({ children }) => {
   const { open } = useContext(MenuIcon);
+  const [expended, setExpended] = useState(false);
+
+  const handleToggle = () => {
+    setExpended((prev) => !prev);
+  };
 
   return (
     <div className="bg-gray-200 w-screen min-h-screen">
@@ -38,11 +48,23 @@ const MainLayout = ({ children }) => {
               <FaAngleRight />
             </li>
 
-            <li className="flex justify-start items-center hover:bg-blue-200 hover:text-blue-800 rounded-xl p-2">
-              <FaCheck className="mr-2" />
-
-              <h3 className="flex-1"> Projects</h3>
-              <FaAngleRight />
+            <li>
+              <div
+                onClick={handleToggle}
+                className="flex justify-start items-center hover:bg-blue-200 hover:text-blue-800 rounded-xl p-2 cursor-pointer"
+              >
+                <FaCheck className="mr-2" />
+                <h3 className="flex-1">Singular</h3>
+                {expended ? <FaAngleDown /> : <FaAngleRight />}
+              </div>
+              {expended && (
+                <ul className="bg-gray-200 rounded-lg shadow-lg p-2">
+                  <Link href="/singular/custom-box">
+                    <li className="cursor-pointer p-2">First box</li>
+                  </Link>
+                  <li className="cursor-pointer p-2">Second box</li>
+                </ul>
+              )}
             </li>
 
             <li className="flex justify-start items-center hover:bg-blue-200 hover:text-blue-800 rounded-xl p-2">
@@ -52,7 +74,7 @@ const MainLayout = ({ children }) => {
               <FaAngleRight />
             </li>
 
-            <Link href='/about-us'>
+            <Link href="/about-us">
               <li className="flex justify-start items-center hover:bg-blue-200 hover:text-blue-800 rounded-xl p-2">
                 <SiHelpscout className="mr-2" />
                 About us
